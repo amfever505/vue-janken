@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="./assets/styles/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const Janken = {
+        GU: 'gu',
+        CHOKI: 'choki',
+        PA: 'pa',
+      };
+      const handsArray = Object.values(Janken);
+      const Result = {
+        WIN: 'win',
+        EVEN: 'even',
+        LOSE: 'lose',
+      };
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="icon" href="favicon.ico">
-  <link rel="stylesheet" href="./assets/styles/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-  <script>
-    const Janken = {
-      GU: "gu",
-      CHOKI: "choki",
-      PA: "pa",
-    };
-    const Result = {
-      WIN: "win",
-      EVEN: "even",
-      LOSE: "lose",
-    };
-
-    Vue.component('dealer-component', {
-      template: `
+      Vue.component('dealer-component', {
+        template: `
       <section id="dealer">
         <h2 class="title">Dealer</h2>
         <div class="dealer" :class="hand" />
       </section>`,
-      props: {
-        hand: String, // { Janken }
-      },
-    });
+        props: {
+          hand: String, // { Janken }
+        },
+      });
 
-    Vue.component('ready-component', {
-      template: `<h2 class="ready" />`,
-    })
+      Vue.component('ready-component', {
+        template: `<h2 class="ready" />`,
+      });
 
-    Vue.component('result-component', {
-      template: `<div class="result" :class="result" />`,
-      props: {
-        result: String, // { Result }
-      },
-    })
+      Vue.component('result-component', {
+        template: `<div class="result" :class="result" />`,
+        props: {
+          result: String, // { Result }
+        },
+      });
 
-    Vue.component('player-component', {
-      template: `
+      Vue.component('player-component', {
+        template: `
       <ul id="player" class="list">
         <li
             v-for="hand in hands"
@@ -53,69 +53,81 @@
             @click="$emit('click', hand)"
         />
       </ul>`,
-      props: {
-        hand: String, // { Janken }
-      },
-      computed: {
-        hands: () => {
-          return Object.values(Janken);
+        props: {
+          hand: String, // { Janken }
         },
-      },
-    })
-
-    const app = new Vue({
-      data() {
-        return {
-          dealersHand: "", // { Janken }
-          result: "", // { Result }
-        };
-      },
-      methods: {
-        /**
-         * ランダムでじゃんけんの手を取得する
-         * @return {Janken}
-         */
-        getRandomHand() {
+        computed: {
+          hands: () => {
+            return Object.values(Janken);
+          },
         },
+      });
 
-        /**
-         * じゃんけんの判定ロジック。playersHandとdealersHandを比較してじゃんけんの勝敗結果を返す
-         * @param {Janken} playersHand プレイヤーが出した手
-         * @param {Janken} dealersHand 親が出した手
-         * @return {Result} 勝敗判定(プレイヤーが勝ちならResult.WIN、プレイヤーが負けならResult.LOSE)
-         */
-        judge(playersHand, dealersHand) {
+      const app = new Vue({
+        data() {
+          return {
+            dealersHand: '', // { Janken }
+            result: '', // { Result }
+          };
         },
+        methods: {
+          /**
+           * ランダムでじゃんけんの手を取得する
+           * @return {Janken}
+           */
+          getRandomHand() {
+            let random = Math.floor(Math.random() * 3);
+            return handsArray[random];
+          },
 
-        /**
-         * じゃんけん勝負を実行して結果をプロパティに代入する
-         * @param {Janken} playersHand
-         */
-        async onClick(playersHand) {
-          this.dealersHand = null;
-          this.result = null;
-          await this.$nextTick();
-          this.dealersHand = this.getRandomHand();
-          this.result = this.judge(playersHand, this.dealersHand);
+          /**
+           * じゃんけんの判定ロジック。playersHandとdealersHandを比較してじゃんけんの勝敗結果を返す
+           * @param {Janken} playersHand プレイヤーが出した手
+           * @param {Janken} dealersHand 親が出した手
+           * @return {Result} 勝敗判定(プレイヤーが勝ちならResult.WIN、プレイヤーが負けならResult.LOSE)
+           */
+          judge(playersHand, dealersHand) {
+            playersHand = handsArray.indexOf(playersHand);
+            dealersHand = handsArray.indexOf(dealersHand);
+            switch ((playersHand - dealersHand + 3) % 3) {
+              case 0:
+                return Result.EVEN;
+                break;
+              case 1:
+                return Result.LOSE;
+                break;
+              case 2:
+                return Result.WIN;
+                break;
+            }
+          },
+          /**
+           * じゃんけん勝負を実行して結果をプロパティに代入する
+           * @param {Janken} playersHand
+           */
+          async onClick(playersHand) {
+            this.dealersHand = null;
+            this.result = null;
+            await this.$nextTick();
+            this.dealersHand = this.getRandomHand();
+            this.result = this.judge(playersHand, this.dealersHand);
+          },
         },
-      },
-    });
+      });
 
-    document.addEventListener("DOMContentLoaded", () => {
-      app.$mount("#app");
-    });
+      document.addEventListener('DOMContentLoaded', () => {
+        app.$mount('#app');
+      });
+    </script>
+    <title>じゃんけん</title>
+  </head>
 
-  </script>
-  <title>じゃんけん</title>
-</head>
-
-<body>
-  <div id="app">
-    <dealer-component v-if="dealersHand" :hand="dealersHand"></dealer-component>
-    <result-component v-if="result" :result="result"></result-component>
-    <ready-component v-else></ready-component>
-    <player-component @click="onClick"></player-component>
-  </div>
-</body>
-
+  <body>
+    <div id="app">
+      <dealer-component v-if="dealersHand" :hand="dealersHand"></dealer-component>
+      <result-component v-if="result" :result="result"></result-component>
+      <ready-component v-else></ready-component>
+      <player-component @click="onClick"></player-component>
+    </div>
+  </body>
 </html>
