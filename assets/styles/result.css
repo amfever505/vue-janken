@@ -1,0 +1,28 @@
+@keyframes result {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.result {
+  width: 480px;
+  height: 128px;
+  opacity: 0;
+  animation-name: result;
+  animation-duration: 0.2s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+.result.win {
+  background-image: url("../images/result-win.png");
+}
+.result.even {
+  background-image: url("../images/result-even.png");
+}
+.result.lose {
+  background-image: url("../images/result-lose.png");
+}

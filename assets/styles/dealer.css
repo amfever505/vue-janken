@@ -1,0 +1,30 @@
+@keyframes dealer-appear {
+  0% {
+    transform: scale(0.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+#dealer .title {
+  text-align: center;
+}
+#dealer .dealer {
+  width: 144px;
+  height: 144px;
+  margin: 24px;
+  transform: scale(0.2);
+
+  animation-name: dealer-appear;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+}
+#dealer .dealer.gu {
+  background-image: url("../images/dealer-gu.png");
+}
+#dealer .dealer.choki {
+  background-image: url("../images/dealer-choki.png");
+}
+#dealer .dealer.pa {
+  background-image: url("../images/dealer-pa.png");
+}
