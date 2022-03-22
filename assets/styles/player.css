@@ -12,29 +12,39 @@
   height: 144px;
   background-position: center;
   position: relative;
+  background-size: contain;
 }
 #player .hand:active::after {
-  content: "";
+  content: '';
   display: block;
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url("../images/player-pon.png");
+  background-image: url('../images/player-pon.png');
+  background-size: contain;
 }
 #player .hand.gu {
-  background-image: url("../images/player-gu.png");
+  background-image: url('../images/player-gu.png');
 }
 #player .hand.choki {
-  background-image: url("../images/player-choki.png");
+  background-image: url('../images/player-choki.png');
 }
 #player .hand.pa {
-  background-image: url("../images/player-pa.png");
+  background-image: url('../images/player-pa.png');
 }
 #player .hand:hover {
   cursor: pointer;
   border: solid 4px #f6c;
   border-radius: 72px;
   box-sizing: border-box;
+}
+/* smart phone */
+@media screen and (max-width: 600px) {
+  #player .hand {
+    margin: 8px;
+    width: 100px;
+    height: 100px;
+  }
 }

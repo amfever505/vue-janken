@@ -20,11 +20,19 @@
   animation-fill-mode: forwards;
 }
 #dealer .dealer.gu {
-  background-image: url("../images/dealer-gu.png");
+  background-image: url('../images/dealer-gu.png');
 }
 #dealer .dealer.choki {
-  background-image: url("../images/dealer-choki.png");
+  background-image: url('../images/dealer-choki.png');
 }
 #dealer .dealer.pa {
-  background-image: url("../images/dealer-pa.png");
+  background-image: url('../images/dealer-pa.png');
+}
+/* smart phone */
+@media screen and (max-width: 600px) {
+  #dealer .dealer {
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+  }
 }

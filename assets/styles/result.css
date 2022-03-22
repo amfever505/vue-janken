@@ -18,11 +18,19 @@
   animation-fill-mode: forwards;
 }
 .result.win {
-  background-image: url("../images/result-win.png");
+  background-image: url('../images/result-win.png');
 }
 .result.even {
-  background-image: url("../images/result-even.png");
+  background-image: url('../images/result-even.png');
 }
 .result.lose {
-  background-image: url("../images/result-lose.png");
+  background-image: url('../images/result-lose.png');
+}
+/* smart phone */
+@media screen and (max-width: 600px) {
+  .result {
+    width: 360px;
+    height: 96px;
+    background-size: cover;
+  }
 }

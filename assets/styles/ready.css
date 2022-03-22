@@ -1,6 +1,6 @@
 @keyframes ready-label {
   to {
-    background-image: url("../images/label-janken.png");
+    background-image: url('../images/label-janken.png');
   }
 }
 
@@ -8,9 +8,17 @@
   width: 480px;
   height: 80px;
   background-size: contain;
-  background-image: url("../images/label-ready.png");
+  background-image: url('../images/label-ready.png');
   animation-name: ready-label;
   animation-delay: 2s;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
+}
+/* smart phone */
+@media screen and (max-width: 600px) {
+  .ready {
+    width: 360px;
+    height: 60px;
+    background-size: cover;
+  }
 }
